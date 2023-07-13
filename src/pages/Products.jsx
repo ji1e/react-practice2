@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
-export default function Products() {
+export default function Products(props) {
   const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get("sort"));
 
@@ -14,6 +14,7 @@ export default function Products() {
         }}
       >
         <h2>🔥 여름 추천템 🔥</h2>
+        {/* searchParams를 이용하여 URL에 따라 상품을 정렬 */}
         <button
           onClick={() => {
             setSearchParams({
@@ -30,39 +31,23 @@ export default function Products() {
             gap: "24px",
           }}
         >
-          <Link to="/products/1">
-            <div
-              style={{
-                width: "200px",
-                height: "240px",
-                backgroundColor: "#068FFF",
-              }}
-            >
-              상품1
-            </div>
-          </Link>
-          <Link to="/products/2">
-            <div
-              style={{
-                width: "200px",
-                height: "240px",
-                backgroundColor: "#068FFF",
-              }}
-            >
-              상품2
-            </div>
-          </Link>
-          <Link to="/products/3">
-            <div
-              style={{
-                width: "200px",
-                height: "240px",
-                backgroundColor: "#068FFF",
-              }}
-            >
-              상품3
-            </div>
-          </Link>
+          {/* 여름 추천 상품 리스트 */}
+          {props.goods.map((item) => {
+            return (
+              <Link to={`/products/${item.id}`} key={item.id}>
+                <div
+                  style={{
+                    width: "200px",
+                    height: "240px",
+                    backgroundColor: "#068FFF",
+                  }}
+                >
+                  <p>{item.name}</p>
+                  <p>{item.price}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </>
